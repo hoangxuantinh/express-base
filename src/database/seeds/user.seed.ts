@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
-import { connectMongoDB } from '../database'
-import UserModel from '../models/User.model'
+import { connectMongoDB } from '../connect'
+import { User } from '../models/User.model'
 
 const seedUsers = async () => {
   const users = [
@@ -12,8 +12,7 @@ const seedUsers = async () => {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(user.password, salt)
     user.password = hashedPassword
-
-    const newUser = new UserModel(user)
+    const newUser = new User(user)
     await newUser.save()
   }
 
