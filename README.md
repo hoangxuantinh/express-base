@@ -22,6 +22,7 @@ $ yarn seed
 ## Test
 
 ```bash
+# to simple i'm using a common db to test and run app
 # unit tests
 $ yarn test
 
