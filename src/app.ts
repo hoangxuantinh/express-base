@@ -7,15 +7,14 @@ import AuthRoute from './routes/auth.route'
 import EventRoute from './routes/event.route'
 
 const app = express()
-const port = process.env.PORT || 3000
 
-connectMongoDB()
+// connectMongoDB()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello world!')
+  res.send('Hello world!!!')
 })
 
 app.use(`${ROUTE_PREFIX}/auth`, AuthRoute)
