@@ -1,15 +1,23 @@
-version: '3.8'
+version: "3"
 services:
   api:
-    build:
-      context: .
+    build: .
+      # context: .
       # dockerfile: Dockerfile
-    volumes:
-      - ./:/app
-      - '/app/node_modules'
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
       - PORT=3000
+  mongo:
+    image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      # instead map path directory -> map name volumes with directory
+      - mongo-db:/data/db
+volumes:
+  mongo-db:
     
-     
+   
+  
