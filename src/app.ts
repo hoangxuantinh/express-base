@@ -8,17 +8,17 @@ import EventRoute from './routes/event.route'
 
 const app = express()
 
-// connectMongoDB()
+connectMongoDB()
 
-app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json({ strict: false }))
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello dung!!!')
 })
 
 app.use(`${ROUTE_PREFIX}/auth`, AuthRoute)
-app.use(`${ROUTE_PREFIX}/event`, EventRoute)
+app.use(`/api/v1/events`, EventRoute)
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next({

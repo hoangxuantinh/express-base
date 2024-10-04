@@ -24,7 +24,7 @@ class AuthController {
         })
       }
 
-      const { _id: userId, name, email } = user
+      const { _id: userId, email } = user
       const accessToken = jwt.sign({ userId, name, email }, String(process.env.ACCESS_TOKEN_SECRET), {
         expiresIn: '1h'
       })

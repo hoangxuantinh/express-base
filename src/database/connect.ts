@@ -1,12 +1,14 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+
+import { DB_CONFIG } from '../config/db.config'
+
 dotenv.config()
+const dbUrl = `mongodb://${DB_CONFIG.MONGO_USER}:${DB_CONFIG.MONGO_PASSWORD}@${DB_CONFIG.MONGO_IP}:${DB_CONFIG.MONGO_PORT}?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.1`
 export const connectMongoDB = async () => {
-  mongoose.connect(String(process.env.DB_URL), {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false
+  console.log('🚀 ~ dbUrl:', dbUrl)
+  mongoose.connect(String(dbUrl), {
+    family: 4,
   })
   mongoose.connection.on('connected', function () {
     console.log('Mongoose default connection is open to MongoDB Atlas')
@@ -16,11 +18,5 @@ export const connectMongoDB = async () => {
   })
   mongoose.connection.on('disconnected', function () {
     console.log('Mongoose default connection is disconnected')
-  })
-  process.on('SIGINT', function () {
-    mongoose.connection.close(function () {
-      console.log('Mongoose default connection is disconnected due to application termination')
-      process.exit(0)
-    })
   })
 }

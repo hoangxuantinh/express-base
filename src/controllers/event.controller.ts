@@ -68,24 +68,13 @@ class EventController {
   }
 
   async getEvents(req: CustomRequest, res: Response) {
-    const { page = 1, perPage = 10, sort = 'startDate' } = req.query
+    console.log("vao day")
     try {
       const events = await Event.find()
-        .sort({ [sort]: 1 })
-        .skip((page - 1) * perPage)
-        .limit(parseInt(perPage))
-        .exec(function (err: any, results: any) {
-          Event.countDocuments().exec(function (err: any, count: any) {
-            res.status(200).json({
-              items: results.map((e: IEvent) => ({ ...e._doc, ended: new Date(e._doc.dueDate) < new Date() })),
-              pagination: {
-                total: count,
-                page,
-                perPage
-              }
-            })
-          })
-        })
+      console.log('🚀 ~ EventController ~ getEvents ~ events:', events)
+      res.status(200).json({
+        data: events
+      })
     } catch (err) {
       res.status(STATUS.INTERNAL_SERVER_ERROR).send(err)
     }
